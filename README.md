@@ -38,17 +38,17 @@ In your HCP account:
    - **AWS_SECRET_ACCESS_KEY** (sensitive)
 4. Create API token
 
-Check out [Terraform Cloud docs](https://developer.hashicorp.com/terraform/cloud-docs) for more.
+Refer to the [Terraform Cloud documentation](https://developer.hashicorp.com/terraform/cloud-docs) for more details.
 
 ### 2. Setup your repository
 
 #### 2.1. Fork this repository
-Fork this repository.<br/>
+Fork this repository.
 Set your organization and workspace names up in [main.tf](main.tf) (`cloud { ... }` block)
 
 #### 2.2. Set up environment
 Create new environment called **_production_** (Settings - Environments - New environment).<br/>
-Add following secrets and variables into your created environment.
+Add the following secrets and variables into your created environment.
 
 | Name                   | Type       | Description                       |
 | ---------------------- | ---------- | --------------------------------- |
@@ -65,14 +65,14 @@ Add following secrets and variables into your created environment.
 
 ### 3. Deploy and configure
 
-Go to the "Actions" tab and run "**1. Deploy and configure**" workflow manually
+Go to the **Actions** tab and manually run the **1. Deploy and configure** workflow.
 
 ## :checkered_flag: Clean up
 
 After you finish don't forget to clean your resources up.<br/>
-Run "**2. Clean up resources**" workflow for that matter.
+Run **2. Clean up resources** workflow for that matter.
 
-## :gear: Workflow explaine
+## :gear: Workflow explained
 
 ### Deploy and Config
 
