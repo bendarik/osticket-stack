@@ -9,41 +9,11 @@ Designed for learning infrastructure-as-code and cloud provisioning best practic
 - Fully automated with Terraform, Ansible, Docker and GitHub Actions
 - Uses Cloudflare for DNS and Certbot for TLS
 
-```mermaid
-stateDiagram-v2
+## :briefcase: Requirements
 
-    Workflow: Deploy and Config workflow
-    Workflow --> Terraform
-    Terraform --> Ansible
-
-    state Terraform {
-        direction LR
-
-        TF_Install: install
-        TF_Init: terraform init
-        TF_Plan: terraform plan
-        TF_Apply: terraform apply
-
-        TF_Install --> TF_Init
-        TF_Init --> TF_Plan
-        TF_Plan --> TF_Apply
-    }
-
-    state Ansible {
-        direction LR
-
-        AN_Install: install ansible
-        AN_Boto: install boto3 and botocore
-        AN_AWS: configure AWS
-        AN_Play1: playbook "docker install"
-        AN_Play2: playbook "docker up"
-
-        AN_Install --> AN_Boto
-        AN_Boto --> AN_AWS
-        AN_AWS --> AN_Play1
-        AN_Play1 --> AN_Play2
-    }
-```
+- **An AWS free tier account** for hosting
+- **A HCP Terraform account** for storing a state file
+- **A Cloudflare account** for managing DNS records
 
 ## :rocket: Step-by-step
 
@@ -86,10 +56,50 @@ Add following secrets and variables into your created environment.
 
 Go to the "Actions" tab and run "**1. Deploy and configure**" workflow manually
 
-### :checkered_flag: Clean up
+## :checkered_flag: Clean up
 
 After you finish don't forget to clean your resources up.<br/>
 Run "**2. Clean up resources**" workflow for that matter.
+
+## Workflow explaine
+
+### Deploy and Config
+
+```mermaid
+stateDiagram-v2
+
+    Workflow: Deploy and Config workflow
+    Workflow --> Terraform
+    Terraform --> Ansible
+
+    state Terraform {
+        direction LR
+
+        TF_Install: install
+        TF_Init: terraform init
+        TF_Plan: terraform plan
+        TF_Apply: terraform apply
+
+        TF_Install --> TF_Init
+        TF_Init --> TF_Plan
+        TF_Plan --> TF_Apply
+    }
+
+    state Ansible {
+        direction LR
+
+        AN_Install: install ansible
+        AN_Boto: install boto3 and botocore
+        AN_AWS: configure AWS
+        AN_Play1: playbook "docker install"
+        AN_Play2: playbook "docker up"
+
+        AN_Install --> AN_Boto
+        AN_Boto --> AN_AWS
+        AN_AWS --> AN_Play1
+        AN_Play1 --> AN_Play2
+    }
+```
 
 ## Components
 
