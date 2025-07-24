@@ -1,5 +1,9 @@
 # osticket stack
 
+[![Terraform](https://img.shields.io/badge/Terraform-Cloud-blueviolet?logo=terraform)](https://terraform.io)
+[![GitHub Actions](https://github.com/bendarik/osticket-stack/.github/workflows/p1-deploy-and-configure.yml/badge.svg)](https://github.com/bendarik/osticket-stack/.github/workflows)
+[![License](https://img.shields.io/github/license/bendarik/osticket-stack)](LICENSE)
+
 A fully automated deployment pipeline for osTicket on AWS EC2 using Terraform, Ansible, Docker, and GitHub Actions.
 Designed for learning infrastructure-as-code and cloud provisioning best practices with DNS and HTTPS via Cloudflare and Certbot.
 
@@ -14,6 +18,13 @@ Designed for learning infrastructure-as-code and cloud provisioning best practic
 - **An AWS free tier account** for hosting
 - **A HCP Terraform account** for storing a state file
 - **A Cloudflare account** for managing DNS records
+
+## :zap: Quickstart
+
+1. Fork and clone this repo
+2. Set up Terraform Cloud workspace
+3. Add secrets in GitHub
+4. Trigger the deployment workflow
 
 ## :rocket: Step-by-step
 
@@ -61,7 +72,7 @@ Go to the "Actions" tab and run "**1. Deploy and configure**" workflow manually
 After you finish don't forget to clean your resources up.<br/>
 Run "**2. Clean up resources**" workflow for that matter.
 
-## Workflow explaine
+## :gear: Workflow explaine
 
 ### Deploy and Config
 
@@ -101,7 +112,10 @@ stateDiagram-v2
     }
 ```
 
-## Components
+## :package: Components Used
 
-1. Docker
-2. ...
+- **Terraform** – for infrastructure provisioning
+- **Ansible** – for configuration management
+- **Docker** – to run osTicket
+- **GitHub Actions** – to automate deployment
+- **Cloudflare** – for DNS and HTTPS via Certbot
