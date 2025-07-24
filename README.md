@@ -1,6 +1,6 @@
 # osticket stack
 
-A fully automated deployment pipeline for osTicket on AWS EC2 using Terraform, Ansible, Docker, and GitHub Actions.<br/>
+A fully automated deployment pipeline for osTicket on AWS EC2 using Terraform, Ansible, Docker, and GitHub Actions.
 Designed for learning infrastructure-as-code and cloud provisioning best practices with DNS and HTTPS via Cloudflare and Certbot.
 
 ## :trophy: Features
