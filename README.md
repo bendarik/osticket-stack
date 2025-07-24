@@ -2,6 +2,7 @@
 
 [![Terraform](https://img.shields.io/badge/Terraform-Cloud-blueviolet?logo=terraform)](https://terraform.io)
 [![GitHub Actions](https://github.com/bendarik/osticket-stack/.github/workflows/p1-deploy-and-configure.yml/badge.svg)](https://github.com/bendarik/osticket-stack/.github/workflows)
+[![Deploy and Configure](https://github.com/bendarik/osticket-stack/actions/workflows/p1-deploy-and-configure.yml/badge.svg)](https://github.com/bendarik/osticket-stack/actions/workflows/p1-deploy-and-configure.yml)
 [![License](https://img.shields.io/github/license/bendarik/osticket-stack)](LICENSE)
 
 A fully automated deployment pipeline for osTicket on AWS EC2 using Terraform, Ansible, Docker, and GitHub Actions.
