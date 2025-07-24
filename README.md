@@ -9,6 +9,42 @@ Designed for learning infrastructure-as-code and cloud provisioning best practic
 - Fully automated with Terraform, Ansible, Docker and GitHub Actions
 - Uses Cloudflare for DNS and Certbot for TLS
 
+```mermaid
+stateDiagram-v2
+
+    Workflow: Deploy and Config workflow
+    Workflow --> Terraform
+    Terraform --> Ansible
+
+    state Terraform {
+        direction LR
+
+        TF_Install: install
+        TF_Init: terraform init
+        TF_Plan: terraform plan
+        TF_Apply: terraform apply
+
+        TF_Install --> TF_Init
+        TF_Init --> TF_Plan
+        TF_Plan --> TF_Apply
+    }
+
+    state Ansible {
+        direction LR
+
+        AN_Install: install ansible
+        AN_Boto: install boto3 and botocore
+        AN_AWS: configure AWS
+        AN_Play1: playbook "docker install"
+        AN_Play2: playbook "docker up"
+
+        AN_Install --> AN_Boto
+        AN_Boto --> AN_AWS
+        AN_AWS --> AN_Play1
+        AN_Play1 --> AN_Play2
+    }
+```
+
 ## :rocket: Step-by-step
 
 ### 1. Setup remote backend for Terraform
