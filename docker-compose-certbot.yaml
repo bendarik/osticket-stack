@@ -9,7 +9,8 @@ services:
       - ./certbot/www:/var/www/certbot
     networks:
       - proxy_default
-    command: certonly --webroot --webroot-path=/var/www/certbot -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} --email ${EMAIL} --agree-tos --force-renewal --non-interactive --test-cert
+    # Add '--test-cert' at the end of the command to test without issuing a real certificate
+    command: certonly --webroot --webroot-path=/var/www/certbot -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} --email ${EMAIL} --agree-tos --force-renewal --non-interactive
 
 networks:
   proxy_default:
