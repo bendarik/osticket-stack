@@ -1,0 +1,130 @@
+---
+- name: Manage Docker Compose application
+  hosts: aws_ec2
+  become: true
+
+  vars:
+    docker_compose_proxy: "docker-compose-proxy.yaml"
+    docker_compose_certbot: "docker-compose-certbot.yaml"
+    docker_compose_app: "docker-compose-app.yaml"
+
+  environment:
+    DOMAIN_NAME: "{{ domain_name }}"
+    EMAIL: "{{ email }}"
+    MYSQL_ROOT_PASSWORD: "secret"
+    MYSQL_USER: "user"
+    MYSQL_PASSWORD: "secret"
+    MYSQL_DATABASE: "osticket"
+
+  tasks:
+
+    # - name: debug
+    #   ansible.builtin.debug:
+    #     msg: "ansible_user_dir: {{ ansible_user_dir }}"
+    #     msg: "{{ ansible_user_dir }}/certbot/conf/live/{{ domain_name }}"
+
+
+    # 1. Copy files to the remote host
+    - name: Copy Docker Compose files
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ ansible_user_dir }}"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+        mode: '0644'
+      loop:
+        - "{{ docker_compose_proxy }}"
+        - "{{ docker_compose_certbot }}"
+        - "{{ docker_compose_app }}"
+        - nginx
+
+    # 2.1. Check if certs directory exists
+    - name: Check if certificates directory exists
+      ansible.builtin.stat:
+        path: "{{ ansible_user_dir }}/certbot/conf/live/{{ domain_name }}"
+      register: certs_dir
+
+    # 2.2*. Prepare nginx config for HTTP-only mode
+    # * - if certs directory does not exist
+    - name: Prepare HTTP-only configuration for nginx
+      ansible.builtin.shell:
+        cmd: |
+          cp {{ ansible_user_dir }}/nginx/nginx-http.conf {{ ansible_user_dir }}/nginx/nginx.conf
+      when: not certs_dir.stat.exists
+
+    # 2.3*. Run nginx in HTTP-only mode
+    # * - if certs directory does not exist
+    - name: docker compose - PROXY up
+      community.docker.docker_compose_v2:
+        project_src: "{{ ansible_user_dir }}"
+        files:
+          - "{{ docker_compose_proxy }}"
+        state: present
+      when: not certs_dir.stat.exists
+
+    # 2.4*. Waiting for nginx to start...
+    # * - if certs directory does not exist
+    - name: Waiting for nginx to start...
+      ansible.builtin.pause:
+        seconds: 5
+      when: not certs_dir.stat.exists
+
+    # 2.5*. Run certbot to get certs
+    # * - if certs directory does not exist
+    - name: docker compose - CERTBOT up
+      community.docker.docker_compose_v2:
+        project_src: "{{ ansible_user_dir }}"
+        files:
+          - "{{ docker_compose_certbot }}"
+        state: present
+      when: not certs_dir.stat.exists
+
+    # 2.6*. Waiting for certbot to get certs...
+    # * - if certs directory does not exist
+    - name: Waiting for certbot to start...
+      ansible.builtin.pause:
+        seconds: 5
+      when: not certs_dir.stat.exists
+
+    # 2.7*. Stop and remove nginx container
+    # * - if certs directory does not exist
+    - name: docker compose - PROXY down
+      community.docker.docker_compose_v2:
+        project_src: "{{ ansible_user_dir }}"
+        files:
+          - "{{ docker_compose_proxy }}"
+        state: stopped
+      when: not certs_dir.stat.exists
+
+    # 3. Prepare nginx config for HTTPS mode
+    - name: Prepare HTTPS configuration for nginx (from a template)
+      ansible.builtin.shell:
+        cmd: |
+          envsubst '${DOMAIN_NAME}' < {{ ansible_user_dir }}/nginx/nginx-https.conf.template > {{ ansible_user_dir }}/nginx/nginx.conf
+
+    # 4. Run nginx in HTTPS mode
+    - name: docker compose - PROXY up
+      community.docker.docker_compose_v2:
+        project_src: "{{ ansible_user_dir }}"
+        files:
+          - "{{ docker_compose_proxy }}"
+        state: present
+
+    # 5. Run application containers
+    - name: docker compose - APP up
+      community.docker.docker_compose_v2:
+        project_src: "{{ ansible_user_dir }}"
+        files:
+          - "{{ docker_compose_app }}"
+        state: present
+
+    # 6. A cron job for renewing certificates
+    #    - runs every 2 months on the first day of the month at 5 AM
+    - name: A cron job for renewing certificates
+      ansible.builtin.cron:
+        name: "renew certbot certificates"
+        minute: "0"
+        hour: "5"
+        day: "1"
+        month: "*/2"
+        job: "/usr/bin/docker compose -f {{ ansible_user_dir }}/{{ docker_compose_proxy }} up certbot -d"

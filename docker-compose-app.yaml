@@ -1,0 +1,36 @@
+name: app
+
+services:
+
+  db:
+    image: mysql:5
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - proxy_default
+  
+  osticket:
+    image: campbellsoftwaresolutions/osticket:latest
+    depends_on:
+      - db
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    networks:
+      - proxy_default
+
+networks:
+  proxy_default:
+    external: true
+
+# env_file:
+#   - ./app.env

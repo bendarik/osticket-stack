@@ -1,0 +1,16 @@
+name: certbot
+
+services:
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    networks:
+      - proxy_default
+    command: certonly --webroot --webroot-path=/var/www/certbot -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} --email ${EMAIL} --agree-tos --force-renewal --non-interactive --test-cert
+
+networks:
+  proxy_default:
+    external: true
