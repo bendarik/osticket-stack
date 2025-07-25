@@ -42,11 +42,8 @@ Refer to the [Terraform Cloud documentation](https://developer.hashicorp.com/ter
 
 ### 2. Setup your repository
 
-#### 2.1. Fork this repository
-Fork this repository.
-Set your organization and workspace names up in [main.tf](main.tf) (`cloud { ... }` block)
-
-#### 2.2. Set up environment
+Fork this repository.<br/>
+<br/>
 Create new environment called **_production_** (Settings - Environments - New environment).<br/>
 Add the following secrets and variables into your created environment.
 
@@ -56,6 +53,8 @@ Add the following secrets and variables into your created environment.
 | AWS_ACCESS_KEY_ID      |  secret    | AWS access key ID                 |
 | AWS_SECRET_ACCESS_KEY  |  secret    | AWS secret access key             |
 | TF_API_TOKEN           |  secret    | Terraform API token               |
+| TF_CLOUD_ORGANIZATION  |  variable  | Terraform Cloud organization      |
+| TF_WORKSPACE           |  variable  | Terraform Cloud workspace         |
 | CLOUDFLARE_API_TOKEN   |  secret    | Cloudflare API token              |
 | CLOUDFLARE_ZONE_ID     |  secret    | Cloudflare Zone ID                |
 | EC2_PRIVATE_KEY        |  secret    | Private key of a SSH key pair     |
