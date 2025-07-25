@@ -14,6 +14,8 @@ jobs:
     environment: production
 
     env:
+      TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
+      TF_WORKSPACE: ${{ vars.TF_WORKSPACE }}
       TF_VAR_aws_region: ${{ vars.AWS_REGION }}
       TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
       TF_VAR_email: ${{ vars.EMAIL }}
@@ -87,9 +89,9 @@ jobs:
       run: |
         pipx inject ansible-core boto3 botocore
 
-    # Check Ansible version
-    - name: Check Ansible version
-      run: ansible --version
+    # # Check Ansible version
+    # - name: Check Ansible version
+    #   run: ansible --version
 
     # Configure AWS credentials
     - name: Configure AWS credentials
@@ -99,10 +101,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ vars.AWS_REGION }}
     
-    # List all EC2 hosts from dynamic inventory
-    - name: List EC2 hosts
-      run: |
-        ansible-inventory -i ansible-inventory.aws_ec2.yml --list
+    # # List all EC2 hosts from dynamic inventory
+    # - name: List EC2 hosts
+    #   run: |
+    #     ansible-inventory -i ansible-inventory.aws_ec2.yml --list
 
     # Ping all EC2 instances to check connectivity
     - name: Ping EC2 instances

@@ -10,14 +10,7 @@ terraform {
     }
   }
 
-  cloud { 
-    
-    organization = "baobabka-com" 
-
-    workspaces { 
-      name = "ost-baobabka-com-github-actions" 
-    } 
-  } 
+  cloud { }
 }
 
 module "aws_module" {
