@@ -13,6 +13,8 @@ jobs:
     environment: production
 
     env:
+      TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
+      TF_WORKSPACE: ${{ vars.TF_WORKSPACE }}
       TF_VAR_aws_region: ${{ vars.AWS_REGION }}
       TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
       TF_VAR_email: ${{ vars.EMAIL }}
