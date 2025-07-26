@@ -28,14 +28,14 @@ Designed for learning infrastructure-as-code and cloud provisioning best practic
 
 ## :rocket: Step-by-step
 
-### 1. Create an AWS IAM user
+### Create an AWS IAM user
 
 Go to your AWS account and create a user with **AmazonEC2FullAccess** permission.<br/>
 Then create an access key and copy your **AWS_ACCESS_KEY_ID** and **AWS_SECRET_ACCESS_KEY**.
 
 For more details about managing access keys, see [the best practices for managing AWS access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#securing_access-keys).
 
-### 2. Setup remote backend for Terraform
+### Setup remote backend for Terraform
 
 In your HCP account:
 1. Create an organization
@@ -47,9 +47,12 @@ In your HCP account:
 
 Refer to the [Terraform Cloud documentation](https://developer.hashicorp.com/terraform/cloud-docs) for more details.
 
-### 3. Create Cloudflare API token
+### Create Cloudflare API token
 
-### 4. Setup your repository
+Got to your Cloudflare account and create an API token with permissions to edit DNS zone.<br/>
+Refer to the [Cloudflare documentation](https://developers.cloudflare.com/fundamentals/api/get-started/create-token) for more details.
+
+### Setup your repository
 
 Fork this repository.<br/>
 <br/>
@@ -71,7 +74,7 @@ Add the following secrets and variables into your created environment.
 | DOMAIN_NAME            |  variable  | Your domain name                  |
 | EMAIL                  |  variable  | Your email address                |
 
-### 3. Deploy and configure
+### Deploy and configure
 
 Go to the **Actions** tab and manually run the **1. Deploy and configure** workflow.
 
