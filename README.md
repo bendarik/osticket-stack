@@ -28,7 +28,14 @@ Designed for learning infrastructure-as-code and cloud provisioning best practic
 
 ## :rocket: Step-by-step
 
-### 1. Setup remote backend for Terraform
+### 1. Create an AWS IAM user
+
+Go to your AWS account and create a user with **AmazonEC2FullAccess** permission.<br/>
+Then create an access key and copy your **AWS_ACCESS_KEY_ID** and **AWS_SECRET_ACCESS_KEY**.
+
+For more details about managing access keys, see [the best practices for managing AWS access keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#securing_access-keys).
+
+### 2. Setup remote backend for Terraform
 
 In your HCP account:
 1. Create an organization
@@ -40,7 +47,7 @@ In your HCP account:
 
 Refer to the [Terraform Cloud documentation](https://developer.hashicorp.com/terraform/cloud-docs) for more details.
 
-### 2. Setup your repository
+### 3. Setup your repository
 
 Fork this repository.<br/>
 <br/>
@@ -52,7 +59,7 @@ Add the following secrets and variables into your created environment.
 | AWS_REGION             |  variable  | AWS region for creating resources |
 | AWS_ACCESS_KEY_ID      |  secret    | AWS access key ID                 |
 | AWS_SECRET_ACCESS_KEY  |  secret    | AWS secret access key             |
-| TF_API_TOKEN           |  secret    | Terraform API token               |
+| TF_API_TOKEN           |  secret    | Terraform user API token          |
 | TF_CLOUD_ORGANIZATION  |  variable  | Terraform Cloud organization      |
 | TF_WORKSPACE           |  variable  | Terraform Cloud workspace         |
 | CLOUDFLARE_API_TOKEN   |  secret    | Cloudflare API token              |
