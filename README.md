@@ -47,7 +47,9 @@ In your HCP account:
 
 Refer to the [Terraform Cloud documentation](https://developer.hashicorp.com/terraform/cloud-docs) for more details.
 
-### 3. Setup your repository
+### 3. Create Cloudflare API token
+
+### 4. Setup your repository
 
 Fork this repository.<br/>
 <br/>
