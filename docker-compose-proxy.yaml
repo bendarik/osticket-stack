@@ -15,17 +15,6 @@ services:
     networks:
       - default
   
-  # certbot:
-  #   image: certbot/certbot
-  #   depends_on:
-  #     - nginx
-  #   volumes:
-  #     - ./certbot/conf:/etc/letsencrypt
-  #     - ./certbot/www:/var/www/certbot
-  #   networks:
-  #     - default
-  #   command: certonly --webroot --webroot-path=/var/www/certbot -d ${DOMAIN_NAME} -d www.${DOMAIN_NAME} --email ${EMAIL} --agree-tos --force-renewal --test-cert
-
 networks:
   default:
     driver: bridge

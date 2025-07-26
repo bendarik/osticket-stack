@@ -127,4 +127,4 @@
         hour: "5"
         day: "1"
         month: "*/2"
-        job: "/usr/bin/docker compose -f {{ ansible_user_dir }}/{{ docker_compose_proxy }} up certbot -d"
+        job: "/usr/bin/docker compose -f {{ ansible_user_dir }}/{{ docker_compose_certbot }} up certbot -d"
