@@ -4,6 +4,7 @@ services:
 
   db:
     image: mysql:5
+    restar: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
@@ -16,6 +17,7 @@ services:
   
   osticket:
     image: campbellsoftwaresolutions/osticket:latest
+    restart: always
     depends_on:
       - db
     environment:
